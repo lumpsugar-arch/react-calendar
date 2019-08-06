@@ -1,0 +1,25 @@
+{
+  "name": "exceed-calendar",
+  "version": "1.0.0",
+  "description": "Test project for Exceed Team",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afanasyev-r/exceed-calendar.git"
+  },
+  "author": "Afanasyev Roman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afanasyev-r/exceed-calendar/issues"
+  },
+  "homepage": "https://github.com/afanasyev-r/exceed-calendar#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
