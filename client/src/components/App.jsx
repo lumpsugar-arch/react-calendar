@@ -1,7 +1,11 @@
 import React from 'react'
 
 const App = () => {
-  return <h3>Calendar</h3>
+  return (
+    <div className='app'>
+      yee!
+    </div>
+  )
 };
 
 export default App
