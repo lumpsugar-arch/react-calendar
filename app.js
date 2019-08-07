@@ -9,7 +9,7 @@ const app = express(),
       port = process.env.PORT || 5000,
       clientPath = path.join(__dirname, 'client');
 
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true} )
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true } )
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
