@@ -1,9 +1,19 @@
 import React from 'react'
 
+import './App.less'
+
+import CalendarGrid from "./CalendarGrid.jsx";
+import EventForm from "./EventForm.jsx";
+import EventList from "./EventList.jsx";
+
 const App = () => {
   return (
     <div className='app'>
-      yee!
+      <CalendarGrid />
+      <div className='events'>
+        {/*<EventForm />*/}
+        {/*<EventList />*/}
+      </div>
     </div>
   )
 };
