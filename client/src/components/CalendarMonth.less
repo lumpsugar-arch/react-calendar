@@ -1,7 +1,15 @@
 .month {
   display: grid;
   margin: .3rem;
-  &__days {
+
+  &__day {
+    &--current {
+      background: red;
+    }
+  }
+
+  &__days,
+  &__weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
   }

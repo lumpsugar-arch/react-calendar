@@ -1,5 +1,5 @@
 import React from 'react'
-import moment, {parseTwoDigitYear} from 'moment'
+import moment from 'moment'
 import CalendarMonth from "./CalendarMonth.jsx";
 
 import './CalendarGrid.less';
@@ -8,6 +8,14 @@ export default class CalendarGrid extends React.Component {
   constructor(props) {
     super(props);
     this.handleYearChange = this.handleYearChange.bind(this);
+
+    // change the start of the week to Monday
+    moment.updateLocale('en', {
+      week: {
+        dow: 1
+      }
+    });
+
     this.state = {
       year: moment().format('YYYY'),
       month: moment().format('M')

@@ -8,15 +8,25 @@ import './CalendarMonth.less'
 export default class CalendarMonth extends React.Component {
   constructor(props) {
     super(props);
+    this.currentDate = moment();
+    this.date = moment([this.props.year, this.props.month], 'YYYY-M');
   }
 
   getDays() {
     let days = [];
-    for(let day = 1; day <= moment([this.props.year, this.props.month], 'YYYY-M').daysInMonth(); day++) {
+
+    for(let day = 1; day <= this.date.daysInMonth(); day++) {
+      const current = (
+        this.currentDate.isSame(moment([this.props.year, this.props.month - 1, day]),
+        'day'))
+        ?
+          'month__day--current'
+        :
+          '';
       days.push(
         <span
           key={day}
-          className='month__day'
+          className={`month__day ${current}`}
         >
           {day}
         </span>
@@ -46,10 +56,32 @@ export default class CalendarMonth extends React.Component {
       .format('E')
   }
 
+  getWeekDays() {
+    let weekdays = [];
+    moment.weekdaysShort(true).forEach((el, index) => {
+      weekdays.push(
+        <span
+          key={index}
+          className='month__weekday'
+        >
+          {el}
+        </span>
+      )
+    });
+    return weekdays
+  }
+
   render() {
     return (
       <div className='month'>
-        <h2>{this.props.title}</h2>
+        <h2 className='month__title'>
+          {this.props.title}
+        </h2>
+
+        <div className='month__weekdays'>
+          {this.getWeekDays()}
+        </div>
+
         <div className='month__days'>
           {this.getBlanks()}
           {this.getDays()}
