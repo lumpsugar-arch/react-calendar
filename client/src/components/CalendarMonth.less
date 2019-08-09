@@ -1,10 +1,52 @@
 .month {
   display: grid;
-  margin: .3rem;
+  cursor: default;
+
+  &__title {
+    margin-bottom: .5rem;
+
+    &--current {
+      color: @color-red;
+    }
+  }
+
+  &__day,
+  &__weekday{
+    text-align: center;
+  }
 
   &__day {
+    width: @cell-size;
+    height: @cell-size;
+    line-height: @cell-size * .95;
+    background: @color-white;
+    color: @color-black;
+    border-radius: 50%;
+
+    &:not(&--empty) {
+      cursor: pointer;
+      transition: ease-out .1s;
+
+      &:hover {
+        background: darken(@color-white, 10%);
+      }
+    }
+
     &--current {
-      background: red;
+      background: @color-red;
+      color: @color-white;
+
+      &:hover {
+        background: lighten(@color-red, 20%) !important;
+      }
+    }
+  }
+
+  &__weekday {
+    font-size: .8rem;
+
+    &:nth-child(n + 6) {
+      color: @color-red;
     }
   }
 
@@ -12,5 +54,6 @@
   &__weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    align-items: center;
   }
 }

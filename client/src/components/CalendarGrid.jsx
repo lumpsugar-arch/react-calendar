@@ -32,12 +32,22 @@ export default class CalendarGrid extends React.Component {
     const months = moment.months();
 
     return (
-      <div>
-        <input
-          type='number'
-          value={this.state.year}
-          onChange={this.handleYearChange}
-        />
+      <div className='calendar-wrapper'>
+        <div className='year-selector'>
+          <label htmlFor="year-selector">
+            Year:
+          </label>
+          <input
+            className='year-selector__input'
+            type='number'
+            value={this.state.year}
+            onChange={this.handleYearChange}
+            id='year-selector'
+            min='0'
+            max='9999'
+          />
+        </div>
+
         <div className='calendar-grid'>
           {
             months.map((month, index) =>

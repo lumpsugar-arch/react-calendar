@@ -72,9 +72,11 @@ export default class CalendarMonth extends React.Component {
   }
 
   render() {
+    const currentMonth = (+this.currentDate.format('M') === this.props.month) ? 'month__title--current' : '';
+
     return (
       <div className='month'>
-        <h2 className='month__title'>
+        <h2 className={`month__title ${currentMonth}`}>
           {this.props.title}
         </h2>
 
