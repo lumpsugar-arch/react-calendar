@@ -22,7 +22,13 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const event = await Event.findByIdAndUpdate({_id: req.params.id}, req.body, { useFindAndModify: false });
+  const event = await Event.findByIdAndUpdate(
+    {_id: req.params.id},
+    req.body,
+    {
+      useFindAndModify: false,
+      new: true
+    });
   res.status(200).json(event)
 });
 
