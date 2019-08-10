@@ -12,6 +12,7 @@ export default class Events extends React.Component {
   constructor(props) {
     super(props);
 
+    this.updateEventList = this.updateEventList.bind(this);
     this.handleEventPost = this.handleEventPost.bind(this);
     this.handleEventRemove = this.handleEventRemove.bind(this);
     this.handleEventEdit = this.handleEventEdit.bind(this);
@@ -77,6 +78,7 @@ export default class Events extends React.Component {
       return (
         <EventEditForm
           event={this.state.eventEdit}
+          onEventEditPost={this.updateEventList}
         />
       )
     }
@@ -90,6 +92,18 @@ export default class Events extends React.Component {
         onEventRemove={this.handleEventRemove}
         onEventEdit={this.handleEventEdit}
       />
+    })
+  }
+
+  updateEventList(event) {
+    this.setState(prevState => {
+      const newEvents = prevState.events;
+      newEvents.forEach((el, index, arr) => {
+        if (el._id === event._id) {
+          arr[index] = event
+        }
+      });
+      return newEvents
     })
   }
 

@@ -42,7 +42,7 @@ export default class EventEditForm extends React.Component {
     e.preventDefault();
 
     axios.put(`${apiPrefix}/${this.state._id}`, this.state)
-      .then(res => console.log(res.data) )
+      .then( this.props.onEventEditPost(this.state) )
       .catch(err => console.log(err))
   }
 
