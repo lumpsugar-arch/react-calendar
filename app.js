@@ -4,6 +4,7 @@ const express = require('express'),
       keys = require('./keys'),
       eventRouter = require('./routes/event'),
       bodyParser = require('body-parser');
+      cors = require('cors');
 
 const app = express(),
       port = process.env.PORT || 5000,
@@ -14,6 +15,7 @@ mongoose.connect(keys.mongoURI, { useNewUrlParser: true } )
   .catch(err => console.error(err));
 
 app.use(bodyParser.json());
+app.use(cors({ origin: '*'}));
 app.use('/api/events', eventRouter);
 app.use(express.static(clientPath));
 
