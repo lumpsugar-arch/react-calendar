@@ -1,6 +1,10 @@
 const express = require('express'),
       User = require('../models/User'),
-      bcrypt = require('bcrypt');
+      bcrypt = require('bcrypt'),
+      passport = require('passport'),
+      passportJwt = require('passport-jwt'),
+      jwt = require('jsonwebtoken');
+
 
 const router = express.Router();
 
@@ -44,6 +48,31 @@ router.post('/register', (req, res) => {
           .catch(err => console.log(err))
       }));
   }
+});
+
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return res.send(err);
+    if (!user) return res.send(info);
+
+    if (user) {
+      req.login(user, { session: false }, (err) => {
+        if (err) return res.send(err);
+
+        const token = jwt.sign(user.toJSON(), 'secret');
+        res.send({ token: token })
+      })
+    }
+  })(req, res, next);
+});
+
+router.get('/getUser', (req, res, next) => {
+  passport.authenticate('jwt', (err, user, info) => {
+    if (err) return res.send(err);
+    if (!user) return res.send(info);
+
+    if (user) return res.send(user)
+  })(req, res, next);
 });
 
 module.exports = router;
