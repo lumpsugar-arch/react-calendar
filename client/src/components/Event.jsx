@@ -2,7 +2,7 @@ import React from 'react'
 import moment from "moment";
 import axios from 'axios'
 
-import { apiPrefix } from '../../../config.json'
+import { apiPrefix } from '../../../config/config.json'
 
 export default class Event extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class Event extends React.Component {
   }
 
   onRemoveButtonClick() {
-    axios.delete(`${apiPrefix}/${this.props.event._id}`)
+    axios.delete(`${apiPrefix}/events/${this.props.event._id}`)
       .then(res => {
         this.props.onEventRemove(this.props.event)
       })

@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from "axios";
 
-import { apiPrefix } from '../../../config.json'
+import { apiPrefix } from '../../../config/config.json'
 
 export default class EventEditForm extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class EventEditForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    axios.put(`${apiPrefix}/${this.state._id}`, this.state)
+    axios.put(`${apiPrefix}/events/${this.state._id}`, this.state)
       .then( this.props.onEventEditPost(this.state) )
       .catch(err => console.log(err))
   }

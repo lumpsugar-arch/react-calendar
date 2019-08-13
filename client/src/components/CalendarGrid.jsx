@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import CalendarMonth from "./CalendarMonth.jsx";
 
-import './CalendarGrid.less';
+import '../less/CalendarGrid.less';
 
 export default class CalendarGrid extends React.Component {
   constructor(props) {

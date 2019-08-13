@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from "axios";
 
-import { apiPrefix } from '../../../config.json'
+import { apiPrefix } from '../../../config/config.json'
 import EventPostForm from "./EventPostForm.jsx"
 import EventEditForm from "./EventEditForm.jsx";
 import Event from "./Event.jsx";
 
-import './Events.less'
+import '../less/Events.less'
 
 export default class Events extends React.Component {
   constructor(props) {
@@ -29,9 +29,9 @@ export default class Events extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`${apiPrefix}`)
+    axios.get(`${apiPrefix}/events/`)
       .then(response => {
-        this.setState({ events: response.data})
+        this.setState({ events: response.data});
       })
       .catch((err) => console.log(err))
   }

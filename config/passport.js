@@ -22,13 +22,13 @@ module.exports = (passport) => {
         email: email
       }).then(user => {
         if (!user) {
-          return done(null, false, { message: 'This email is not registered' });
+          return done(null, false, { msg: 'This email is not registered' });
         }
 
         bcrypt.compare(password.trim(), user.password.trim(), (err, isMatch) => {
           if (err) throw err;
           if (isMatch) return done(null, user);
-          return done(null, false, { message: 'Password incorrect' });
+          return done(null, false, { msg: 'Password incorrect' });
         });
       });
     })

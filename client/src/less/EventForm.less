@@ -1,0 +1,22 @@
+.event-form {
+  max-height: 20rem;
+  transition: max-height ease-in-out .5s;
+  background: @color-white;
+  padding: .5rem;
+  position: static;
+  overflow: hidden;
+
+  &--hidden {
+    max-height: 0;
+    padding: 0;
+  }
+
+  &:before {
+    content: '11';
+    position: absolute;
+    right: 1rem;
+    top: -1rem;
+  }
+}
+
+

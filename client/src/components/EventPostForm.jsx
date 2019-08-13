@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import { apiPrefix } from '../../../config.json'
+import { apiPrefix } from '../../../config/config.json'
 
-import './EventForm.less'
+import '../less/EventForm.less'
 
 export default class EventPostForm extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class EventPostForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    axios.post(`${apiPrefix}/`, this.state)
+    axios.post(`${apiPrefix}/events/`, this.state)
       .then(res => this.props.onEventPost(res.data) )
       .catch(err => console.log(err))
   }

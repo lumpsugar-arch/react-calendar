@@ -1,0 +1,38 @@
+.events-wrapper {
+  background: @color-smoke;
+}
+
+.event-list {
+  &__header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__list {
+    padding: 1rem;
+    list-style: none;
+  }
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 5fr 2fr;
+
+  &__title {
+  }
+
+  &__control {
+    justify-self: end;
+  }
+
+  &__date {
+    font-size: .8rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  & + & {
+    margin-top: .5rem;
+  }
+}

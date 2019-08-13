@@ -7,7 +7,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'output'),
         filename: 'bundle.min.js',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        publicPath: '/'
     },
 
     devServer: {
@@ -15,7 +16,8 @@ module.exports = {
         compress: true,
         port: 9000,
         host: 'localhost',
-        writeToDisk: true
+        writeToDisk: true,
+        historyApiFallback: true
     },
 
     module: {
@@ -24,7 +26,10 @@ module.exports = {
             exclude: /(node_modules)/,
             loader: 'babel-loader',
             options: {
-                presets: ["@babel/preset-env", "@babel/preset-react"]
+                presets: ["@babel/preset-env", "@babel/preset-react"],
+                plugins: [
+                    "@babel/plugin-proposal-class-properties"
+                ]
             }
         }, {
             test: /\.css$/i,

@@ -1,9 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import CalendarDay from "./CalendarDay.jsx";
-
-import './CalendarMonth.less'
+import '../less/CalendarMonth.less'
 
 export default class CalendarMonth extends React.Component {
   constructor(props) {
