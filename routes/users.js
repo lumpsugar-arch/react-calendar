@@ -27,27 +27,25 @@ router.post('/register', (req, res) => {
 
   User.findOne({ email: userData.email })
     .then(user => {
-      if (user) {
-        errors.push({msg: 'User with this email is already registered'});
+      if (user) errors.push({msg: 'User with this email is already registered'});
+
+      if (errors.length > 0) {
+        res.json(errors)
+      } else {
+        const user = new User(userData);
+
+        bcrypt.genSalt(10, (err, salt) =>
+          bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) throw err;
+            user.password = hash;
+            user.save()
+              .then(user => {
+                res.status(201).json(user)
+              })
+              .catch(err => console.log(err))
+          }));
       }
     });
-
-  if (errors.length > 0) {
-    res.json(errors)
-  } else {
-    const user = new User(userData);
-
-    bcrypt.genSalt(10, (err, salt) =>
-      bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) throw err;
-        user.password = hash;
-        user.save()
-          .then(user => {
-            res.status(201).json(user)
-          })
-          .catch(err => console.log(err))
-      }));
-  }
 });
 
 router.post('/login', function(req, res, next) {
