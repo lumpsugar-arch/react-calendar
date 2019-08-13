@@ -21,10 +21,20 @@ export default class CalendarMonth extends React.Component {
           'month__day--current'
         :
           '';
+
+      let event = '';
+      for (let i = 0; i < this.props.events.length; i++) {
+        let eventDateStart = moment(this.props.events[i].dateStart);
+        if (eventDateStart.isSame(moment([this.props.year, this.props.month - 1, day]), 'day')) {
+          event = 'month__day--event';
+          break
+        }
+      }
+
       days.push(
         <span
           key={day}
-          className={`month__day ${current}`}
+          className={`month__day ${current} ${event}` }
         >
           {day}
         </span>

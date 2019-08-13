@@ -13,8 +13,12 @@ class CalendarApp extends React.Component {
     super(props);
 
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleEventPost = this.handleEventPost.bind(this);
+    this.handleEventRemove = this.handleEventRemove.bind(this);
+    this.updateEventList = this.updateEventList.bind(this);
 
     this.state = {
+      events: [],
       username: '',
       _id: ''
     }
@@ -36,9 +40,58 @@ class CalendarApp extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState._id !== this.state._id) {
+      this.getEventsList()
+    }
+  }
+
+  getEventsList() {
+    axios.get(`${apiPrefix}/events/`, {
+      params: {
+        userId: this.state._id
+      }
+    })
+      .then(response => {
+        this.setState({ events: response.data});
+        console.log(this.state.events);
+      })
+      .catch((err) => console.log(err))
+  }
+
   handleLogout() {
     localStorage.removeItem('user-token');
     this.props.history.push('/login')
+  }
+
+  handleEventPost(event) {
+    this.setState(prevState => ({
+      events: [...prevState.events, event]
+    }));
+  }
+
+  handleEventRemove(event) {
+    if (this.state.events.length > 0) {
+      const newEventList = this.state.events.filter(e => {
+        return e !== event
+      });
+
+      this.setState({
+        events: [...newEventList]
+      })
+    }
+  }
+
+  updateEventList(event) {
+    this.setState(prevState => {
+      const newEvents = prevState.events;
+      newEvents.forEach((el, index, arr) => {
+        if (el._id === event._id) {
+          arr[index] = event
+        }
+      });
+      return newEvents
+    })
   }
 
   render() {
@@ -50,8 +103,14 @@ class CalendarApp extends React.Component {
             (<a className='link header__link' onClick={ this.handleLogout }>logout</a>)
           </span>
         </header>
-        <CalendarGrid />
-        <Events userId={this.state._id} />
+        <CalendarGrid events={this.state.events} />
+        <Events
+          events={this.state.events}
+          userId={this.state._id}
+          onEventPost={this.handleEventPost}
+          onEventRemove={this.handleEventRemove}
+          updateEventsList={this.updateEventList}
+        />
       </div>
     )
   }

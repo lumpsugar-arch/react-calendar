@@ -56,6 +56,7 @@ export default class CalendarGrid extends React.Component {
                 year={this.state.year}
                 month={index + 1}
                 title={month}
+                events={this.props.events}
               />
             )
           }

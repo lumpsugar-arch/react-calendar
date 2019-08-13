@@ -1,7 +1,5 @@
 import React from 'react'
-import axios from "axios";
 
-import { apiPrefix } from '../../../config/config.json'
 import EventPostForm from "./EventPostForm.jsx"
 import EventEditForm from "./EventEditForm.jsx";
 import Event from "./Event.jsx";
@@ -19,33 +17,22 @@ export default class Events extends React.Component {
     this.togglePostForm = this.togglePostForm.bind(this);
 
     this.state = {
-      events: [],
       form: {
         hidden: true
       },
       isEditFormVisible: false,
-      eventEdit: {}
+      eventEdit: {},
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.userId !== this.props.userId) {
-      axios.get(`${apiPrefix}/events/`, {
-        params: {
-          userId: this.props.userId
-        }
-      })
-        .then(response => {
-          this.setState({ events: response.data});
-        })
-        .catch((err) => console.log(err))
+
     }
   }
 
   handleEventPost(event) {
-    this.setState(prevState => ({
-      events: [...prevState.events, event]
-    }));
+    this.props.onEventPost(event)
   }
 
   handleEventEdit(event) {
@@ -56,13 +43,11 @@ export default class Events extends React.Component {
   }
 
   handleEventRemove(event) {
-    const newEventList = this.state.events.filter(e => {
-      return e !== event
-    });
+    this.props.onEventRemove(event)
+  }
 
-    this.setState({
-      events: [...newEventList]
-    })
+  updateEventList(event) {
+    this.props.updateEventsList(event)
   }
 
   togglePostForm() {
@@ -91,25 +76,13 @@ export default class Events extends React.Component {
   }
 
   eventList() {
-    return this.state.events.map((currentEvent, index) => {
+    return this.props.events.map((currentEvent, index) => {
       return <Event
         key={index}
         event={currentEvent}
         onEventRemove={this.handleEventRemove}
         onEventEdit={this.handleEventEdit}
       />
-    })
-  }
-
-  updateEventList(event) {
-    this.setState(prevState => {
-      const newEvents = prevState.events;
-      newEvents.forEach((el, index, arr) => {
-        if (el._id === event._id) {
-          arr[index] = event
-        }
-      });
-      return newEvents
     })
   }
 
