@@ -28,12 +28,18 @@ export default class Events extends React.Component {
     };
   }
 
-  componentDidMount() {
-    axios.get(`${apiPrefix}/events/`)
-      .then(response => {
-        this.setState({ events: response.data});
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.userId !== this.props.userId) {
+      axios.get(`${apiPrefix}/events/`, {
+        params: {
+          userId: this.props.userId
+        }
       })
-      .catch((err) => console.log(err))
+        .then(response => {
+          this.setState({ events: response.data});
+        })
+        .catch((err) => console.log(err))
+    }
   }
 
   handleEventPost(event) {
@@ -123,6 +129,7 @@ export default class Events extends React.Component {
           <EventPostForm
             onEventPost={this.handleEventPost}
             hidden={this.state.form.hidden}
+            userId={this.props.userId}
           />
           <ul className='event-list__list'>
             { this.eventList() }

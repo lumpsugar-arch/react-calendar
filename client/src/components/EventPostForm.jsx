@@ -16,8 +16,15 @@ export default class EventPostForm extends React.Component {
     this.state = {
       title: '',
       dateStart: new Date(),
-      dateEnd: new Date()
+      dateEnd: new Date(),
+      userId: ''
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      userId: this.props.userId
+    })
   }
 
   onChangeTitle(e) {
@@ -41,7 +48,14 @@ export default class EventPostForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    axios.post(`${apiPrefix}/events/`, this.state)
+    const eventData = {
+      title: this.state.title,
+      dateStart: this.state.dateStart,
+      dateEnd: this.state.dateEnd,
+      userId: this.props.userId
+    };
+
+    axios.post(`${apiPrefix}/events/`, eventData)
       .then(res => this.props.onEventPost(res.data) )
       .catch(err => console.log(err))
   }

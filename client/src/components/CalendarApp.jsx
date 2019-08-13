@@ -15,7 +15,8 @@ class CalendarApp extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
 
     this.state = {
-      username: ''
+      username: '',
+      _id: ''
     }
   }
 
@@ -25,7 +26,8 @@ class CalendarApp extends React.Component {
     }).then(res => {
       if (res.data.username) {
         this.setState({
-          username: res.data.username
+          username: res.data.username,
+          _id: res.data._id
         })
       }
     }).catch(err => {
@@ -49,7 +51,7 @@ class CalendarApp extends React.Component {
           </span>
         </header>
         <CalendarGrid />
-        <Events />
+        <Events userId={this.state._id} />
       </div>
     )
   }

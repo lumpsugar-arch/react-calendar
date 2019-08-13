@@ -14,6 +14,10 @@ const eventSchema = new Schema({
   dateEnd: {
     type: Date,
     required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true
   }
 });
 

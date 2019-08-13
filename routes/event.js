@@ -4,7 +4,9 @@ const express = require('express'),
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const events = await Event.find({});
+  const events = await Event.find({
+    userId: req.query.userId
+  });
   res.status(200).json(events)
 });
 
@@ -12,7 +14,8 @@ router.post('/', async (req, res) => {
   const eventData = {
     title: req.body.title,
     dateStart: req.body.dateStart,
-    dateEnd: req.body.dateEnd
+    dateEnd: req.body.dateEnd,
+    userId: req.body.userId
   };
 
   const event = new Event(eventData);
