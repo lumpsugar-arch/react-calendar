@@ -15,20 +15,13 @@ export default class Events extends React.Component {
     this.handleEventRemove = this.handleEventRemove.bind(this);
     this.handleEventEdit = this.handleEventEdit.bind(this);
     this.togglePostForm = this.togglePostForm.bind(this);
+    this.toggleEditForm = this.toggleEditForm.bind(this);
 
     this.state = {
-      form: {
-        hidden: true
-      },
+      isPostFormVisible: false,
       isEditFormVisible: false,
       eventEdit: {},
     };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.userId !== this.props.userId) {
-
-    }
   }
 
   handleEventPost(event) {
@@ -52,9 +45,7 @@ export default class Events extends React.Component {
 
   togglePostForm() {
     this.setState({
-      form: {
-        hidden: false
-      }
+      isPostFormVisible: !this.state.isPostFormVisible
     })
   }
 
@@ -70,6 +61,8 @@ export default class Events extends React.Component {
         <EventEditForm
           event={this.state.eventEdit}
           onEventEditPost={this.updateEventList}
+          visible={this.state.isEditFormVisible}
+          onOverlayClick={this.toggleEditForm}
         />
       )
     }
@@ -92,16 +85,14 @@ export default class Events extends React.Component {
         <div className='event-list'>
           <div className='event-list__header'>
             <h2>Events</h2>
-            <div
-              className='event-list__button event-list__button--add'
-              onClick={this.togglePostForm}
-            >
-              +
+            <div className='event-list__button event-list__button--add'
+                 onClick={this.togglePostForm}>
+              <span>+</span>
             </div>
           </div>
           <EventPostForm
             onEventPost={this.handleEventPost}
-            hidden={this.state.form.hidden}
+            visible={this.state.isPostFormVisible}
             userId={this.props.userId}
           />
           <ul className='event-list__list'>

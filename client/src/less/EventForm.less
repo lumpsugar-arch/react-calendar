@@ -1,14 +1,33 @@
 .event-form {
   max-height: 20rem;
-  transition: max-height ease-in-out .5s;
+  transition: ease .5s;
   background: @color-white;
-  padding: .5rem;
+  padding: 1.5rem;
   position: static;
   overflow: hidden;
 
   &--hidden {
     max-height: 0;
     padding: 0;
+  }
+
+  .form {
+    &__header {
+      font-size: .5rem;
+      margin-bottom: 1rem;
+    }
+
+    &__row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    &__input-text {
+      &--title {
+        margin-left: 0;
+      }
+    }
   }
 
   &:before {
@@ -18,5 +37,19 @@
     top: -1rem;
   }
 }
+
+.event-edit-form {
+  position: absolute;
+  top: 10rem;
+  width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  background: @color-white;
+  padding: 2rem;
+  z-index: 200;
+}
+
 
 

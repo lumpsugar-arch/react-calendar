@@ -1,0 +1,21 @@
+.calendar-app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.calendar-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.header {
+  position: fixed;
+  padding: 1rem 2rem;
+
+  &__welcome {
+    background: @color-white;
+    box-shadow: 0 0 .5rem @color-smoke;
+    padding: .5rem;
+  }
+}

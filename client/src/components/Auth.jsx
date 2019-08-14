@@ -48,7 +48,6 @@ class Auth extends React.Component {
 
     return (
       <div>
-        auth
         { this.props.children }
       </div>
     )

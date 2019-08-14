@@ -24,11 +24,19 @@
     border-radius: 50%;
 
     &:not(&--empty) {
-      cursor: pointer;
       transition: ease-out .1s;
 
       &:hover {
         background: darken(@color-white, 10%);
+      }
+    }
+
+    &--event {
+      background: @color-blue;
+      color: @color-white;
+
+      &:hover {
+        background: lighten(@color-blue, 10%) !important;
       }
     }
 
@@ -39,10 +47,6 @@
       &:hover {
         background: lighten(@color-red, 20%) !important;
       }
-    }
-
-    &--event {
-      background: @color-pink;
     }
   }
 

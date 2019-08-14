@@ -34,7 +34,7 @@ export default class CalendarMonth extends React.Component {
       days.push(
         <span
           key={day}
-          className={`month__day ${current} ${event}` }
+          className={`month__day ${current} ${event}`}
         >
           {day}
         </span>
@@ -80,7 +80,13 @@ export default class CalendarMonth extends React.Component {
   }
 
   render() {
-    const currentMonth = (+this.currentDate.format('M') === this.props.month) ? 'month__title--current' : '';
+    const currentMonth =
+      (this.currentDate.isSame(
+        moment([this.props.year, this.props.month - 1]), 'month')
+      ) ?
+          'month__title--current'
+        :
+          '';
 
     return (
       <div className='month'>

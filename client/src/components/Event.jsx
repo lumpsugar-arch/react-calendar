@@ -27,32 +27,35 @@ export default class Event extends React.Component {
   render() {
     return (
       <li className='event'>
-        <div className='event__title'>
-          {this.props.event.title}
+        <div className="event__main">
+          <div className='event__title'>
+            {this.props.event.title}
+          </div>
+
+          <div className='event__date'>
+            <span className='event__date-item'>
+             from: {moment(this.props.event.dateStart).format('Do MMM YYYY, H:mm')}
+            </span>
+
+            <span className='event__date-item'>
+              to: {moment(this.props.event.dateEnd).format('Do MMM YYYY, H:mm')}
+            </span>
+          </div>
         </div>
 
         <div className='event__control'>
-          <span
+          <a
             className='event__button event__button--edit'
             onClick={this.onEditButtonClick}
           >
-            E
-          </span>
-          <span
+            Edit
+          </a>
+          <a
             className='event__button event__button--remove'
             onClick={this.onRemoveButtonClick}
           >
-            R
-          </span>
-        </div>
-
-        <div className='event__date'>
-      <span className='event__date-item'>
-         {moment(this.props.event.dateStart).format('Do MMM YYYY, H:mm')}
-      </span>
-          <span className='event__date-item'>
-        {moment(this.props.event.dateEnd).format('Do MMM YYYY, H:mm')}
-      </span>
+            Remove
+          </a>
         </div>
       </li>
     )

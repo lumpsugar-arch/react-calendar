@@ -2,7 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import { apiPrefix } from '../../../config/config.json'
 
+import '../less/form.less'
 import '../less/EventForm.less'
+import moment from "moment";
 
 export default class EventPostForm extends React.Component {
   constructor(props) {
@@ -15,9 +17,10 @@ export default class EventPostForm extends React.Component {
 
     this.state = {
       title: '',
-      dateStart: new Date(),
-      dateEnd: new Date(),
-      userId: ''
+      dateStart: moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
+      dateEnd: moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
+      userId: '',
+      error: ''
     }
   }
 
@@ -48,6 +51,15 @@ export default class EventPostForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
+    if (new Date(this.state.dateStart).getTime() > new Date(this.state.dateEnd).getTime()) {
+      this.setState({
+          error: 'The end date should be bigger than the start date'
+      });
+      return
+    } else this.setState({
+      error: ''
+    });
+
     const eventData = {
       title: this.state.title,
       dateStart: this.state.dateStart,
@@ -61,10 +73,19 @@ export default class EventPostForm extends React.Component {
   }
 
   render() {
-    const hidden = this.props.hidden ? 'event-form--hidden' : '';
+    const hidden = this.props.visible ? '' : 'event-form--hidden',
+          hiddenErr = this.state.error ? '' : 'hidden';
 
     return (
       <form onSubmit={ this.onSubmit } className={`form event-form ${hidden}`}>
+        <div className='form__header'>
+          <h1>Add new event</h1>
+        </div>
+
+        <div className={`form__error-wrap ${hiddenErr}`}>
+          <span className='form__error'>{this.state.error}</span>
+        </div>
+
         <div className='form__row'>
           <input
             className='form__input-text form__input-text--title'
@@ -100,7 +121,7 @@ export default class EventPostForm extends React.Component {
           />
         </div>
 
-        <div className='form__row'>
+        <div className='form__submit-wrap'>
           <input
             type='submit'
             value='Save'

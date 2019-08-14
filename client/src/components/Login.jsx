@@ -60,12 +60,10 @@ export default class Login extends React.Component {
 
     axios.post(`${apiPrefix}/users/login`, user)
       .then(res => {
-        console.log(res.data);
         if (res.data.msg) {
           this.setState({
             error: res.data.msg
           })
-          console.log(this.state.error);
         }
         if (res.data.token) {
           localStorage.setItem('user-token', res.data.token);

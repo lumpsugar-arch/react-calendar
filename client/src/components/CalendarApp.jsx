@@ -8,6 +8,8 @@ import { getJwt}  from "./helpers/jwt";
 import { apiPrefix } from '../../../config/config'
 import { withRouter } from 'react-router-dom'
 
+import '../less/CalendarApp.less'
+
 class CalendarApp extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +56,6 @@ class CalendarApp extends React.Component {
     })
       .then(response => {
         this.setState({ events: response.data});
-        console.log(this.state.events);
       })
       .catch((err) => console.log(err))
   }
@@ -103,14 +104,17 @@ class CalendarApp extends React.Component {
             (<a className='link header__link' onClick={ this.handleLogout }>logout</a>)
           </span>
         </header>
-        <CalendarGrid events={this.state.events} />
-        <Events
-          events={this.state.events}
-          userId={this.state._id}
-          onEventPost={this.handleEventPost}
-          onEventRemove={this.handleEventRemove}
-          updateEventsList={this.updateEventList}
-        />
+
+        <div className='calendar-main'>
+          <CalendarGrid events={this.state.events} />
+          <Events
+            events={this.state.events}
+            userId={this.state._id}
+            onEventPost={this.handleEventPost}
+            onEventRemove={this.handleEventRemove}
+            updateEventsList={this.updateEventList}
+          />
+        </div>
       </div>
     )
   }
