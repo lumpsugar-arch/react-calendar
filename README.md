@@ -1,4 +1,9 @@
 # exceed-calendar
 Test project for Exceed Team
 
-To run this app type ```npm run build && npm run app``` in the root.
+How to install:
+1. Run ```npm i```
+2. Run webpack build ```npm run build```
+3. Run server ```npm run app```.
+The application will be available on ```http://localhost:5000```
+
