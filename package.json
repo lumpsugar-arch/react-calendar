@@ -4,7 +4,9 @@
   "description": "Test project for Exceed Team",
   "main": "app.js",
   "scripts": {
-    "node-dev-server": "nodemon app.js"
+    "node-dev-server": "nodemon app.js",
+    "app": "node app.js",
+    "build": "cd client && webpack"
   },
   "repository": {
     "type": "git",
