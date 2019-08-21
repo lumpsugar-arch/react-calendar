@@ -8,6 +8,7 @@ export default class CalendarGrid extends React.Component {
   constructor(props) {
     super(props);
     this.handleYearChange = this.handleYearChange.bind(this);
+    this.handleDayClick = this.handleDayClick.bind(this);
 
     // change the start of the week to Monday
     moment.updateLocale('en', {
@@ -26,6 +27,10 @@ export default class CalendarGrid extends React.Component {
     this.setState({
       year: e.target.value
     })
+  }
+
+  handleDayClick(e) {
+    this.props.onDayClick(e)
   }
 
   render() {
@@ -57,6 +62,7 @@ export default class CalendarGrid extends React.Component {
                 month={index + 1}
                 title={month}
                 events={this.props.events}
+                onDayClick={this.handleDayClick}
               />
             )
           }

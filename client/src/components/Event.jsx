@@ -44,15 +44,13 @@ export default class Event extends React.Component {
         </div>
 
         <div className='event__control'>
-          <a
-            className='event__button event__button--edit'
-            onClick={this.onEditButtonClick}
+          <a className='event__button event__button--edit'
+             onClick={this.onEditButtonClick}
           >
             Edit
           </a>
-          <a
-            className='event__button event__button--remove'
-            onClick={this.onRemoveButtonClick}
+          <a className='event__button event__button--remove'
+             onClick={this.onRemoveButtonClick}
           >
             Remove
           </a>

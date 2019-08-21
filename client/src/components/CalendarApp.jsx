@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import axios from "axios";
 
 import CalendarGrid from "./CalendarGrid.jsx";
-import Events from "./Events.jsx";
-import axios from "axios";
+import EventList from "./EventList.jsx";
+import EventForm from "./EventForm.jsx";
 
 import { getJwt}  from "./helpers/jwt";
 import { apiPrefix } from '../../../config/config'
@@ -14,15 +15,19 @@ class CalendarApp extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleLogout = this.handleLogout.bind(this);
-    this.handleEventPost = this.handleEventPost.bind(this);
+    this.handleEventAction = this.handleEventAction.bind(this);
     this.handleEventRemove = this.handleEventRemove.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.appendNewEvent = this.appendNewEvent.bind(this);
     this.updateEventList = this.updateEventList.bind(this);
+    this.toggleEventForm = this.toggleEventForm.bind(this);
 
     this.state = {
       events: [],
       username: '',
-      _id: ''
+      userId: '',
+      currentEventInForm: {},
+      isEventFormVisible: false
     }
   }
 
@@ -33,17 +38,18 @@ class CalendarApp extends React.Component {
       if (res.data.username) {
         this.setState({
           username: res.data.username,
-          _id: res.data._id
+          userId: res.data._id
         })
       }
     }).catch(err => {
+      console.log(err);
       localStorage.removeItem('user-token');
       this.props.history.push('/login')
     })
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState._id !== this.state._id) {
+    if (prevState.userId !== this.state.userId) {
       this.getEventsList()
     }
   }
@@ -51,13 +57,15 @@ class CalendarApp extends React.Component {
   getEventsList() {
     axios.get(`${apiPrefix}/events/`, {
       params: {
-        userId: this.state._id
+        userId: this.state.userId
       }
     })
-      .then(response => {
-        this.setState({ events: response.data});
+      .then(res => {
+        this.setState({ events: res.data});
       })
-      .catch((err) => console.log(err))
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   handleLogout() {
@@ -65,10 +73,28 @@ class CalendarApp extends React.Component {
     this.props.history.push('/login')
   }
 
-  handleEventPost(event) {
-    this.setState(prevState => ({
-      events: [...prevState.events, event]
-    }));
+  handleEventAction(event, isEdit) {
+    if (isEdit) {
+      this.setState({
+        isEventEdit: true
+      })
+    } else {
+      this.setState({
+        isEventEdit: false
+      })
+    }
+
+    if (event) {
+      this.setState({
+        currentEventInForm: event
+      });
+    } else {
+      this.setState({
+        currentEventInForm: {}
+      })
+    }
+
+    this.toggleEventForm()
   }
 
   handleEventRemove(event) {
@@ -83,6 +109,12 @@ class CalendarApp extends React.Component {
     }
   }
 
+  appendNewEvent(event) {
+    this.setState(prevState => ({
+      events: [...prevState.events, event]
+    }));
+  }
+
   updateEventList(event) {
     this.setState(prevState => {
       const newEvents = prevState.events;
@@ -95,26 +127,45 @@ class CalendarApp extends React.Component {
     })
   }
 
+  toggleEventForm() {
+    this.setState({
+      isEventFormVisible: !this.state.isEventFormVisible
+    })
+  }
+
   render() {
     return (
       <div className='calendar-app'>
         <header className='header'>
           <span className='header__welcome'>
             Welcome, { this.state.username }
-            (<a className='link header__link' onClick={ this.handleLogout }>logout</a>)
+            (<a className='link header__link' onClick={ this.handleLogout }>log out</a>)
           </span>
         </header>
 
         <div className='calendar-main'>
-          <CalendarGrid events={this.state.events} />
-          <Events
-            events={this.state.events}
-            userId={this.state._id}
-            onEventPost={this.handleEventPost}
-            onEventRemove={this.handleEventRemove}
-            updateEventsList={this.updateEventList}
+          <CalendarGrid
+            events={ this.state.events }
+            onDayClick={ this.handleEventAction }
+          />
+          <EventList
+            events={ this.state.events }
+            userId={ this.state.userId }
+            onAddButtonClick={ this.handleEventAction }
+            onEditButtonClick={ this.handleEventAction }
+            onRemoveButtonClick={ this.handleEventRemove }
           />
         </div>
+
+        <EventForm
+          event={ this.state.currentEventInForm }
+          userId={ this.state.userId }
+          isVisible={ this.state.isEventFormVisible }
+          isEventEdit={ this.state.isEventEdit }
+          toggleForm={ this.toggleEventForm }
+          onEventPost={ this.appendNewEvent }
+          onEventEdit={ this.updateEventList }
+        />
       </div>
     )
   }

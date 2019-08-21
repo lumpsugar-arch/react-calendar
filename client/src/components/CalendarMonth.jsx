@@ -8,6 +8,17 @@ export default class CalendarMonth extends React.Component {
     super(props);
     this.currentDate = moment();
     this.date = moment([this.props.year, this.props.month], 'YYYY-M');
+
+    this.onDayClick = this.onDayClick.bind(this)
+  }
+
+  onDayClick(e) {
+    const day = {
+      dateStart: moment([this.props.year, this.props.month - 1, e]),
+      dateEnd: moment([this.props.year, this.props.month - 1, e])
+    };
+
+    this.props.onDayClick(day)
   }
 
   getDays() {
@@ -35,6 +46,7 @@ export default class CalendarMonth extends React.Component {
         <span
           key={day}
           className={`month__day ${current} ${event}`}
+          onClick={() => this.onDayClick(day)}
         >
           {day}
         </span>

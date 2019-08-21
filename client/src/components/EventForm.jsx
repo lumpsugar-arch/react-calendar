@@ -1,10 +1,12 @@
 import React from 'react'
-import axios from "axios"
 import moment from 'moment'
+import axios from 'axios'
 
 import { apiPrefix } from '../../../config/config.json'
 
-export default class EventEditForm extends React.Component {
+import '../less/EventForm.less'
+
+export default class EventForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,13 +14,29 @@ export default class EventEditForm extends React.Component {
     this.onChangeDateStart = this.onChangeDateStart.bind(this);
     this.onChangeDateEnd = this.onChangeDateEnd.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onOverlayClick = this.onOverlayClick.bind(this);
 
     this.state = {
-      _id: props.event._id,
-      title: props.event.title,
-      dateStart: moment(props.event.dateStart).format(moment.HTML5_FMT.DATETIME_LOCAL),
-      dateEnd: moment(props.event.dateEnd).format(moment.HTML5_FMT.DATETIME_LOCAL)
+      id: '',
+      title: '',
+      dateStart: '',
+      dateEnd: ''
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps !== this.props) {
+      this.setState({
+        id: this.props.event._id,
+        title: this.props.event.title,
+
+        dateStart: (this.props.event.dateStart)
+          ? moment(this.props.event.dateStart).format(moment.HTML5_FMT.DATETIME_LOCAL)
+          : '',
+
+        dateEnd: (this.props.event.dateEnd)
+          ? moment(this.props.event.dateEnd).format(moment.HTML5_FMT.DATETIME_LOCAL)
+          : ''
+      })
     }
   }
 
@@ -46,7 +64,6 @@ export default class EventEditForm extends React.Component {
     if (new Date(this.state.dateStart).getTime() > new Date(this.state.dateEnd).getTime()) {
       this.setState({
         error: 'The end date should be bigger than the start date'
-
       });
       return
     } else this.setState({
@@ -54,33 +71,44 @@ export default class EventEditForm extends React.Component {
     });
 
     const eventData = {
+      _id: this.state.id,
       title: this.state.title,
       dateStart: this.state.dateStart,
       dateEnd: this.state.dateEnd,
+      userId: this.props.userId
     };
 
-    axios.put(`${apiPrefix}/events/${this.state._id}`, eventData)
-      .then( this.props.onEventEditPost(this.state) )
-      .catch(err => console.log(err))
-  }
-
-  onOverlayClick() {
-    this.props.onOverlayClick()
+    if (this.props.isEventEdit) {
+      axios.put(`${apiPrefix}/events/${eventData._id}`, eventData)
+        .then( res => {
+          this.props.toggleForm();
+          this.props.onEventEdit(res.data)
+        } )
+        .catch(err => console.log(err))
+    } else {
+      axios.post(`${apiPrefix}/events/`, eventData)
+        .then( res => {
+          this.props.toggleForm();
+          this.props.onEventPost(res.data)
+        } )
+        .catch(err => console.log(err))
+    }
   }
 
   render() {
-    const hidden = this.props.visible ? '' : 'hidden',
-          hiddenErr = this.state.error ? '' : 'hidden';
+    const hidden = this.props.isVisible ? '' : 'hidden',
+          hiddenErr = this.state.error ? '' : 'hidden',
+          headerTitle = this.props.isEventEdit ? 'Edit event' : 'Add new event';
 
     return (
       <div>
-        <form onSubmit={this.onSubmit} className={`form event-form event-edit-form ${hidden}`}>
+        <form onSubmit={ this.onSubmit } className={`form event-form event-edit-form ${hidden}`}>
           <div className='form__header'>
-            <h1>Edit event</h1>
+            <h1>{`${headerTitle}`}</h1>
           </div>
 
           <div className={`form__error-wrap ${hiddenErr}`}>
-            <span className='form__error'>{this.state.error}</span>
+            <span className='form__error'>{ this.state.error }</span>
           </div>
 
           <div className='form__row'>
@@ -88,9 +116,10 @@ export default class EventEditForm extends React.Component {
               className='form__input-text form__input-text--title'
               type='text'
               id='title'
-              value={this.state.title}
+              placeholder='Enter title here...'
+              value={ this.state.title || '' }
               required
-              onChange={this.onChangeTitle}
+              onChange={ this.onChangeTitle }
             />
           </div>
 
@@ -100,9 +129,9 @@ export default class EventEditForm extends React.Component {
               className='form__input-text'
               type='datetime-local'
               id='date-start'
+              value={ this.state.dateStart || ''}
               required
-              value={this.state.dateStart}
-              onChange={this.onChangeDateStart}
+              onChange={ this.onChangeDateStart }
             />
           </div>
 
@@ -112,13 +141,13 @@ export default class EventEditForm extends React.Component {
               className='form__input-text'
               type='datetime-local'
               id='date-end'
+              value={ this.state.dateEnd || ''}
               required
-              value={this.state.dateEnd}
-              onChange={this.onChangeDateEnd}
+              onChange={ this.onChangeDateEnd }
             />
           </div>
 
-          <div className='form__row'>
+          <div className='form__submit-wrap'>
             <input
               type='submit'
               value='Save'
@@ -127,7 +156,7 @@ export default class EventEditForm extends React.Component {
           </div>
         </form>
 
-        <div className={`overlay ${hidden}`} onClick={this.onOverlayClick}> </div>
+        <div className={`overlay ${hidden}`} onClick={ this.props.toggleForm }> </div>
       </div>
     )
   }
