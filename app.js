@@ -10,7 +10,7 @@ const express = require('express'),
 
 const app = express(),
       port = process.env.PORT || 5000,
-      clientPath = path.join(__dirname, 'client');
+      clientPath = path.join(__dirname, 'client/output');
 
 require('./config/passport')(passport);
 
