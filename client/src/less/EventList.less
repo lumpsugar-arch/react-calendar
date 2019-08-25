@@ -45,6 +45,16 @@
     }
   }
 
+  &__notice {
+    margin: 1rem 0;
+  }
+
+  &--empty {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
   @media @mobile {
     border-left: none;
     border-top: .2rem solid @color-smoke;
@@ -59,13 +69,18 @@
   border-bottom: .1rem solid darken(@color-smoke, 10%);
   padding: 1rem;
 
+  &__title {
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
   &__control {
     display: flex;
     flex-direction: column;
     text-align: right;
     justify-self: end;
     font-size: .8rem;
-    justify-content: center;
+    justify-content: space-around;
   }
 
   &__date {

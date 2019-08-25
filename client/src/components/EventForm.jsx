@@ -34,11 +34,11 @@ export default class EventForm extends React.Component {
 
         dateStart: (this.props.event.dateStart)
           ? moment(this.props.event.dateStart).format(moment.HTML5_FMT.DATETIME_LOCAL)
-          : '',
+          : moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
 
         dateEnd: (this.props.event.dateEnd)
           ? moment(this.props.event.dateEnd).format(moment.HTML5_FMT.DATETIME_LOCAL)
-          : '',
+          : moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
 
         validationErr: ''
       })
@@ -134,7 +134,7 @@ export default class EventForm extends React.Component {
               className='form__input-text'
               type='datetime-local'
               id='date-start'
-              value={ this.state.dateStart || ''}
+              value={ this.state.dateStart || '' }
               required
               onChange={ this.onChangeDateStart }
             />
@@ -146,7 +146,7 @@ export default class EventForm extends React.Component {
               className='form__input-text'
               type='datetime-local'
               id='date-end'
-              value={ this.state.dateEnd || ''}
+              value={ this.state.dateEnd || '' }
               required
               onChange={ this.onChangeDateEnd }
             />

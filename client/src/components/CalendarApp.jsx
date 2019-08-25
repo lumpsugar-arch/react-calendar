@@ -11,6 +11,8 @@ import { apiPrefix } from '../../../config/config'
 import { withRouter } from 'react-router-dom'
 import { messages } from "./helpers/messages";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import '../less/CalendarApp.less'
 
 class CalendarApp extends React.Component {
@@ -162,7 +164,12 @@ class CalendarApp extends React.Component {
         <header className='header'>
           <span className='header__welcome'>
             Welcome, { this.state.username }
-            (<a className='link header__link' onClick={ this.handleLogout }>log out</a>)
+            <a className='link header__link'
+               onClick={ this.handleLogout }
+               title='Sign out'
+            >
+              <FontAwesomeIcon icon={ faSignOutAlt }/>
+            </a>
           </span>
         </header>
 

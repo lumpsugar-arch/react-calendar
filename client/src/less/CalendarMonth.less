@@ -18,13 +18,14 @@
   &__day {
     width: @cell-size;
     height: @cell-size;
-    line-height: @cell-size * .95;
+    line-height: @cell-size * .99;
     background: @color-white;
     color: @color-black;
     border-radius: 50%;
 
     &:not(&--empty) {
       transition: ease-out .1s;
+      cursor: pointer;
 
       &:hover {
         background: darken(@color-white, 10%);

@@ -4,6 +4,7 @@ import Loadable from 'react-loadable'
 
 import Auth from './Auth.jsx';
 
+import { Loader } from './Loader.jsx'
 import '../less/App.less'
 
 export default class App extends React.Component {
@@ -11,7 +12,7 @@ export default class App extends React.Component {
     const LazyRoute = (props) => {
       const component = Loadable({
         loader: props.component,
-        loading: () => <div>Loading&hellip;</div>,
+        loading: () => <div><Loader /></div>,
       });
 
       return <Route {...props} component={component} />;

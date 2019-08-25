@@ -4,6 +4,10 @@ import axios from 'axios'
 
 import { apiPrefix } from '../../../config/config.json'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 export default class Event extends React.Component {
   constructor(props) {
     super(props);
@@ -52,13 +56,15 @@ export default class Event extends React.Component {
         <div className='event__control'>
           <a className='event__button event__button--edit'
              onClick={this.onEditButtonClick}
+             title='Edit'
           >
-            Edit
+            <FontAwesomeIcon icon={ faPen } />
           </a>
           <a className='event__button event__button--remove'
              onClick={this.onRemoveButtonClick}
+             title='Remove'
           >
-            Remove
+            <FontAwesomeIcon icon={ faTrash } />
           </a>
         </div>
       </li>
