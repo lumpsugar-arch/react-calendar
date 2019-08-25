@@ -10,7 +10,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'output'),
     filename: '[name].[hash].js',
-    libraryTarget: 'umd',
     publicPath: '/'
   },
 

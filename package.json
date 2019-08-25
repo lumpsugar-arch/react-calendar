@@ -4,10 +4,10 @@
   "description": "Test project for Exceed Team",
   "main": "app.js",
   "scripts": {
-    "node-dev-server": "nodemon app.js",
-    "app": "node app.js",
-    "start": "cd client && webpack --config webpack.dev.js --watch",
-    "build": "cd client && webpack --config webpack.prod.js"
+    "server-start:dev": "nodemon app.js",
+    "server-start:prod": "node app.js",
+    "start:dev": "cd client && webpack-dev-server --config webpack.dev.js",
+    "start:prod": "cd client && webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",

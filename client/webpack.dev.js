@@ -8,8 +8,6 @@ module.exports = merge(common, {
     contentBase: path.resolve(__dirname),
     compress: true,
     port: 9000,
-    host: 'localhost',
-    writeToDisk: true,
-    historyApiFallback: true
+    host: 'localhost'
   }
 });

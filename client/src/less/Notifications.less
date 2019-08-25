@@ -1,0 +1,28 @@
+.notifications {
+  position: fixed;
+  top: 2rem;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  background: @color-white;
+  box-shadow: 0 0 1rem @color-smoke;
+  transition: ease-in-out .5s;
+  text-align: center;
+
+  &--hidden {
+    top: -5rem;
+    opacity: 0;
+  }
+
+  &__messages {
+    color: @color-green;
+  }
+
+  &__errors {
+    color: @color-red;
+  }
+}
