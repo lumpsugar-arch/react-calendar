@@ -33,13 +33,19 @@ export default class Event extends React.Component {
           </div>
 
           <div className='event__date'>
-            <span className='event__date-item'>
-             from: {moment(this.props.event.dateStart).format('Do MMM YYYY, H:mm')}
-            </span>
+            <div className='event__date-item'>
+              <span className="event__date-label">from:</span>
+              <span className="event__date-value">
+                {moment(this.props.event.dateStart).format('Do MMM YYYY, H:mm')}
+              </span>
+            </div>
 
-            <span className='event__date-item'>
-              to: {moment(this.props.event.dateEnd).format('Do MMM YYYY, H:mm')}
-            </span>
+            <div className='event__date-item'>
+              <span className="event__date-label">to:</span>
+              <span className="event__date-value">
+                {moment(this.props.event.dateEnd).format('Do MMM YYYY, H:mm')}
+              </span>
+            </div>
           </div>
         </div>
 

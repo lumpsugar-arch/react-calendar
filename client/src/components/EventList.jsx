@@ -2,7 +2,7 @@ import React from 'react'
 
 import Event from "./Event.jsx";
 
-import '../less/Events.less'
+import '../less/EventList.less'
 
 export default class EventList extends React.Component {
   constructor(props) {

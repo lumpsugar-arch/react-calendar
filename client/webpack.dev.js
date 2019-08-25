@@ -4,10 +4,12 @@ const merge = require('webpack-merge'),
 
 module.exports = merge(common, {
   mode: 'development',
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     contentBase: path.resolve(__dirname),
     compress: true,
     port: 9000,
-    host: 'localhost'
+    host: 'localhost',
+    historyApiFallback: true
   }
 });

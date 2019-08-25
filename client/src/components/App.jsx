@@ -21,10 +21,10 @@ export default class App extends React.Component {
       <div className='app'>
         <BrowserRouter>
           <Switch>
-            <LazyRoute path='/register' component={() => import('./Register.jsx')} />
-            <LazyRoute path='/login' component={() => import('./Login.jsx')} />
+            <LazyRoute exact path='/register' component={() => import('./Register.jsx')} />
+            <LazyRoute exact path='/login' component={() => import('./Login.jsx')} />
             <Auth>
-              <LazyRoute path='/' component={() => import('./CalendarApp.jsx')} />
+              <LazyRoute exact path='/' component={() => import('./CalendarApp.jsx')} />
             </Auth>
           </Switch>
         </BrowserRouter>

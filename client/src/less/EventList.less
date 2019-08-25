@@ -1,5 +1,6 @@
 .events-wrapper {
   background: @color-smoke;
+  grid-area: events;
 }
 
 .event-list {
@@ -15,6 +16,10 @@
   &__list {
     padding: 1rem;
     list-style: none;
+
+    @media @mobile {
+      padding: 0;
+    }
   }
 
   &__button {
@@ -39,6 +44,11 @@
       }
     }
   }
+
+  @media @mobile {
+    border-left: none;
+    border-top: .2rem solid @color-smoke;
+  }
 }
 
 .event {
@@ -59,13 +69,18 @@
   }
 
   &__date {
-    width: 50%;
     font-size: .8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     color: lighten(@color-black, 30%);
     margin-top: .5rem;
+  }
+
+  &__date-item {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+
+  &__date-value {
+    color: @color-black;
   }
 
   & + & {

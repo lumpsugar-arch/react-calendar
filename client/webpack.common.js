@@ -40,7 +40,10 @@ module.exports = {
     }, {
       test: /\.css$/i,
       use: [
-        'css-loader',
+        {
+          loader: 'css-loader',
+          options: { sourceMap: true }
+        },
         MiniCssExtractPlugin.loader
       ]
     }, {
@@ -48,14 +51,19 @@ module.exports = {
       use: [
         'style-loader',
         MiniCssExtractPlugin.loader,
-        'css-loader',
-        'less-loader',
+        {
+          loader: 'css-loader',
+          options: { sourceMap: true }
+        },
+        {
+          loader: 'less-loader',
+          options: { sourceMap: true }
+        },
         {
           loader: 'style-resources-loader',
           options: {
-            patterns: [
-              path.resolve(__dirname, 'src/less/variables.less')
-            ]
+            patterns: path.resolve(__dirname, 'src/less/variables.less'),
+            injector: 'append'
           }
         }],
     }, {
