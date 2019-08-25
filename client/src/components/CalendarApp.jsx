@@ -4,11 +4,15 @@ import axios from "axios";
 import CalendarGrid from "./CalendarGrid.jsx";
 import EventList from "./EventList.jsx";
 import EventForm from "./EventForm.jsx";
+import Notifications from "./Notifications.jsx";
 
 import { getJwt}  from "./helpers/jwt";
 import { apiPrefix } from '../../../config/config'
 import { withRouter } from 'react-router-dom'
+import { messages } from "./helpers/messages";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import '../less/CalendarApp.less'
 
 class CalendarApp extends React.Component {
@@ -27,7 +31,9 @@ class CalendarApp extends React.Component {
       username: '',
       userId: '',
       currentEventInForm: {},
-      isEventFormVisible: false
+      isEventFormVisible: false,
+      messages: [],
+      errors: []
     }
   }
 
@@ -43,6 +49,7 @@ class CalendarApp extends React.Component {
       }
     }).catch(err => {
       console.log(err);
+      this.appendNewError(messages.ERROR_USER);
       localStorage.removeItem('user-token');
       this.props.history.push('/login')
     })
@@ -105,13 +112,29 @@ class CalendarApp extends React.Component {
 
       this.setState({
         events: [...newEventList]
-      })
+      });
+
+      this.appendNewMessage(messages.SUCCESS_REMOVE)
     }
   }
 
   appendNewEvent(event) {
     this.setState(prevState => ({
       events: [...prevState.events, event]
+    }));
+
+    this.appendNewMessage(messages.SUCCESS_POST)
+  }
+
+  appendNewMessage(msg) {
+    this.setState(prevState => ({
+      messages: [...prevState.messages, msg]
+    }));
+  }
+
+  appendNewError(err) {
+    this.setState(prevState => ({
+      errors: [...prevState.errors, err]
     }));
   }
 
@@ -124,7 +147,9 @@ class CalendarApp extends React.Component {
         }
       });
       return newEvents
-    })
+    });
+
+    this.appendNewMessage(messages.SUCCESS_EDIT)
   }
 
   toggleEventForm() {
@@ -139,7 +164,12 @@ class CalendarApp extends React.Component {
         <header className='header'>
           <span className='header__welcome'>
             Welcome, { this.state.username }
-            (<a className='link header__link' onClick={ this.handleLogout }>log out</a>)
+            <a className='link header__link'
+               onClick={ this.handleLogout }
+               title='Sign out'
+            >
+              <FontAwesomeIcon icon={ faSignOutAlt }/>
+            </a>
           </span>
         </header>
 
@@ -165,6 +195,11 @@ class CalendarApp extends React.Component {
           toggleForm={ this.toggleEventForm }
           onEventPost={ this.appendNewEvent }
           onEventEdit={ this.updateEventList }
+        />
+
+        <Notifications
+          messages={ this.state.messages }
+          errors={ this.state.errors }
         />
       </div>
     )

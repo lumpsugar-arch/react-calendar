@@ -3,7 +3,9 @@ import moment from 'moment'
 import axios from 'axios'
 
 import { apiPrefix } from '../../../config/config.json'
+import { messages } from "./helpers/messages";
 
+import '../less/form.less'
 import '../less/EventForm.less'
 
 export default class EventForm extends React.Component {
@@ -19,7 +21,8 @@ export default class EventForm extends React.Component {
       id: '',
       title: '',
       dateStart: '',
-      dateEnd: ''
+      dateEnd: '',
+      validationErr: ''
     }
   }
 
@@ -31,11 +34,13 @@ export default class EventForm extends React.Component {
 
         dateStart: (this.props.event.dateStart)
           ? moment(this.props.event.dateStart).format(moment.HTML5_FMT.DATETIME_LOCAL)
-          : '',
+          : moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
 
         dateEnd: (this.props.event.dateEnd)
           ? moment(this.props.event.dateEnd).format(moment.HTML5_FMT.DATETIME_LOCAL)
-          : ''
+          : moment().format(moment.HTML5_FMT.DATETIME_LOCAL),
+
+        validationErr: ''
       })
     }
   }
@@ -63,11 +68,11 @@ export default class EventForm extends React.Component {
 
     if (new Date(this.state.dateStart).getTime() > new Date(this.state.dateEnd).getTime()) {
       this.setState({
-        error: 'The end date should be bigger than the start date'
+        validationErr: messages.ERROR_DATE
       });
       return
     } else this.setState({
-      error: ''
+      validationErr: ''
     });
 
     const eventData = {
@@ -82,7 +87,7 @@ export default class EventForm extends React.Component {
       axios.put(`${apiPrefix}/events/${eventData._id}`, eventData)
         .then( res => {
           this.props.toggleForm();
-          this.props.onEventEdit(res.data)
+          this.props.onEventEdit(res.data);
         } )
         .catch(err => console.log(err))
     } else {
@@ -97,7 +102,7 @@ export default class EventForm extends React.Component {
 
   render() {
     const hidden = this.props.isVisible ? '' : 'hidden',
-          hiddenErr = this.state.error ? '' : 'hidden',
+          hiddenErr = this.state.validationErr ? '' : 'hidden',
           headerTitle = this.props.isEventEdit ? 'Edit event' : 'Add new event';
 
     return (
@@ -108,7 +113,7 @@ export default class EventForm extends React.Component {
           </div>
 
           <div className={`form__error-wrap ${hiddenErr}`}>
-            <span className='form__error'>{ this.state.error }</span>
+            <span className='form__error'>{ this.state.validationErr }</span>
           </div>
 
           <div className='form__row'>
@@ -129,7 +134,7 @@ export default class EventForm extends React.Component {
               className='form__input-text'
               type='datetime-local'
               id='date-start'
-              value={ this.state.dateStart || ''}
+              value={ this.state.dateStart || '' }
               required
               onChange={ this.onChangeDateStart }
             />
@@ -141,7 +146,7 @@ export default class EventForm extends React.Component {
               className='form__input-text'
               type='datetime-local'
               id='date-end'
-              value={ this.state.dateEnd || ''}
+              value={ this.state.dateEnd || '' }
               required
               onChange={ this.onChangeDateEnd }
             />
@@ -156,7 +161,10 @@ export default class EventForm extends React.Component {
           </div>
         </form>
 
-        <div className={`overlay ${hidden}`} onClick={ this.props.toggleForm }> </div>
+        <div
+          className={`overlay ${hidden}`}
+          onClick={ this.props.toggleForm }
+        />
       </div>
     )
   }

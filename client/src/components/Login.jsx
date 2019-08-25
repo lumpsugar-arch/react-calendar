@@ -31,6 +31,7 @@ export default class Login extends React.Component {
         this.props.history.push('/')
       }
     }).catch(err => {
+      console.log(err);
       localStorage.removeItem('user-token');
       this.props.history.push('/login')
     })
@@ -70,7 +71,7 @@ export default class Login extends React.Component {
           this.props.history.push('/')
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }
 
   render() {

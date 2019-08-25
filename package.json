@@ -4,9 +4,10 @@
   "description": "Test project for Exceed Team",
   "main": "app.js",
   "scripts": {
-    "node-dev-server": "nodemon app.js",
-    "app": "node app.js",
-    "build": "cd client && webpack"
+    "server-start:dev": "nodemon app.js",
+    "server-start:prod": "node app.js",
+    "start:dev": "cd client && webpack-dev-server --config webpack.dev.js",
+    "start:prod": "cd client && webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/afanasyev-r/exceed-calendar#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
@@ -42,15 +46,24 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.10",
     "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
     "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.19.1",
+    "postcss-loader": "^3.0.0",
+    "react-loadable": "^5.5.0",
     "style-loader": "^1.0.0",
     "style-resources-loader": "^1.2.1",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-bundle-analyzer": "^3.4.1",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.1"
   }
 }

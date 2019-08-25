@@ -7,6 +7,18 @@
 .calendar-main {
   display: grid;
   grid-template-columns: 2fr 1fr;
+  grid-template-areas: "calendar events";
+
+  @media @tablet {
+    grid-template-columns: 3fr 2fr;
+  }
+
+  @media @mobile {
+    grid-template-columns: auto;
+    grid-template-areas:
+      "calendar"
+      "events";
+  }
 }
 
 .header {
@@ -17,5 +29,22 @@
     background: @color-white;
     box-shadow: 0 0 .5rem @color-smoke;
     padding: .5rem;
+
+    @media @mobile {
+      display: block;
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  &__link {
+    margin: 0 .5rem;
+  }
+
+  @media @mobile {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

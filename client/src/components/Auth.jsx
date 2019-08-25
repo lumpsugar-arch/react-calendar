@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom'
 import { apiPrefix } from '../../../config/config'
 import { getJwt } from "./helpers/jwt";
 
+import { Loader } from './Loader.jsx'
+
 class Auth extends React.Component {
   _isMounted = false;
   constructor(props) {
@@ -42,7 +44,7 @@ class Auth extends React.Component {
   render() {
     if (this.state.user === undefined) {
       return (
-        <div><h1>Loading...</h1></div>
+        <Loader />
       )
     }
 
